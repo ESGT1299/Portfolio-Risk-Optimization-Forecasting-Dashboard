@@ -134,18 +134,41 @@ You get a "fan chart" showing likely ranges (p05, p25, p50, p75, p95).
      - Monte Carlo Percentile Fan  
 
 ---
+## 🎯 Benefits  
+
+- **End-to-end pipeline:** Covers data ingestion, modeling, optimization, and visualization.  
+- **Practical for decision-making:** See diversification effects, risk exposure, and forward-looking scenarios.  
+- **Educational:** Demonstrates theory (MPT, VaR, CVaR) with real-world data.  
+- **Professional showcase:** Highlights data science, statistics, finance, and visualization skills.
+
+---
+
+## ⚠️ Limitations  
+
+- **Forecast uncertainty:** ARIMA/LSTM models may fail during regime shifts.  
+- **Single-period optimization:** Does not include transaction costs or rebalancing schedules.  
+- **Normality assumptions:** VaR may underestimate tail risk during crises.  
+- **Limited asset universe:** Focused on a small set of assets (SPY, QQQ, GLD, BND, BTC-USD).
+
+---
+
+## 🚀 Future Work  
+
+- Add **real-time data pipelines** for live updates  
+- Support **additional asset classes** (international equities, REITs, commodities)  
+- Explore **CVaR or downside-risk optimization**  
+- Integrate **macro factors** and **sentiment data** into forecasts  
+- Implement **backtesting framework** for strategy validation  
+- Add **transaction cost modeling** and turnover constraints  
+
+---
 
 ## 📊 Tableau Dashboards  
 
 - **Dashboard 1:** Risk & Portfolio Construction  
 - **Dashboard 2:** Forecast & Simulation Analysis  
 
-### Axis Names:
-- **Date vs Price ($)** → for forecast overlay  
-- **Date vs Volatility (σ)** → for GARCH vs realized  
-- **Portfolio Volatility (σ) vs Portfolio Return** → Efficient Frontier  
-- **Portfolio vs Weight (%)** → Optimal Allocations  
-- **Simulation Day vs Value** → Monte Carlo Fan  
+
 
 🌐 **Explore the Interactive Tableau Dashboard:**  
 🔗 [Multi-Asset Risk, Correlation & Forecast Insights](https://public.tableau.com/views/Multi-AssetRiskCorrelationForecastInsights/RiskPortfolioConstruction?:language=es-ES&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
@@ -172,3 +195,30 @@ streamlit run streamlit_app.py
 ```
 
 4. Open your browser and navigate to the local Streamlit server (usually http://localhost:8501).
+
+
+## 📜 License
+
+This project is licensed under the MIT License — you are free to use, modify, and distribute it with attribution.
+
+## 📚 References
+
+- Harry Markowitz, Portfolio Selection (1952) — Foundation of Modern Portfolio Theory
+
+- Kevin Sheppard, ARCH & GARCH Models in Python (arch library)
+
+- Facebook Prophet Documentation — https://facebook.github.io/prophet
+
+- Hochreiter & Schmidhuber (1997) — Long Short-Term Memory (LSTM paper)
+
+- PyPortfolioOpt Library — https://pyportfolioopt.readthedocs.io
+
+- Investopedia — Sharpe Ratio, Value-at-Risk (VaR), Expected Shortfall (CVaR) articles
+
+## 🤝 Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## 🌟 Acknowledgments
+
+Thanks to the open-source Python ecosystem and to the finance/data science community for making tools like pandas, statsmodels, prophet, arch, and PyPortfolioOpt freely available.
