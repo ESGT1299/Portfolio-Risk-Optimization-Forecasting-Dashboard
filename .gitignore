@@ -1,0 +1,20 @@
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore virtual environments
+venv/
+.env/
+
+# Ignore Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Temporary/large files
+*.csv
+*.xlsx
+*.png
+*.twb
+*.twbx
+
+# Ignore Streamlit session state
+.streamlit/
