@@ -1,23 +1,37 @@
 import numpy as np
 import pandas as pd
 
+def _validated_returns(series: pd.Series) -> np.ndarray:
+    values = np.asarray(series, dtype=float)
+    if values.ndim != 1 or values.size == 0:
+        raise ValueError("returns must be a nonempty one-dimensional series")
+    if not np.isfinite(values).all() or (values < -1).any():
+        raise ValueError("returns must be finite decimal simple returns >= -1")
+    return values
+
+
 def max_drawdown(series: pd.Series) -> float:
-    cum = (1 + series).cumprod()
-    peak = cum.cummax()
-    dd = cum / peak - 1.0
-    return dd.min()
+    values = _validated_returns(series)
+    # Include initial capital: a loss in the first observation is a drawdown.
+    wealth = np.concatenate(([1.0], np.cumprod(1.0 + values)))
+    peaks = np.maximum.accumulate(wealth)
+    return float(np.min(wealth / peaks - 1.0))
 
 def sharpe_ratio(series: pd.Series, rf: float = 0.0, periods: int = 252) -> float:
     excess = series - rf/periods
     return np.sqrt(periods) * excess.mean() / excess.std(ddof=0)
 
 def sortino_ratio(series: pd.Series, rf: float = 0.0, periods: int = 252) -> float:
-    excess = series - rf/periods
-    downside = excess[excess < 0]
-    denom = downside.std(ddof=0)
-    if denom == 0 or np.isnan(denom):
+    values = _validated_returns(series)
+    if periods <= 0 or not np.isfinite(rf):
+        raise ValueError("periods must be positive and rf finite")
+    excess = values - rf/periods
+    # Target downside deviation over ALL observations, not the standard
+    # deviation of the negative subset (which hides constant losses).
+    denom = np.sqrt(np.mean(np.minimum(excess, 0.0) ** 2))
+    if denom == 0:
         return np.nan
-    return np.sqrt(periods) * excess.mean() / denom
+    return float(np.sqrt(periods) * excess.mean() / denom)
 
 def var_cvar(series: pd.Series, level: float = 0.95) -> tuple[float, float]:
     q = np.percentile(series, (1 - level) * 100)

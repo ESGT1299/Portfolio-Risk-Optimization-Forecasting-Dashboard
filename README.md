@@ -222,3 +222,17 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 ## 🌟 Acknowledgments
 
 Thanks to the open-source Python ecosystem and to the finance/data science community for making tools like pandas, statsmodels, prophet, arch, and PyPortfolioOpt freely available.
+
+
+## Risk metric regression checks
+
+Run `python -m unittest test_risk_metrics -v` with NumPy and pandas installed.
+The synthetic analytical cases verify that maximum drawdown includes starting
+capital (a first-day loss must count), and that Sortino uses the root mean
+squared shortfall below the target across all observations. The target is the
+annual `rf` input divided by `periods`; this is a documented simple-rate
+approximation. No-downside Sortino is reported as undefined, not infinity.
+Empty, nonfinite, or impossible simple returns below -100% fail explicitly.
+
+These are correctness checks, not out-of-sample investment-performance evidence.
+Other dashboard metrics and live data remain separate validation work.
